@@ -1,0 +1,10 @@
+# Laravel alt projeleri için genel .gitignore
+*/vendor
+*/node_modules
+*/storage/*.key
+*/public/storage
+*/.env
+*/.env.*
+.DS_Store
+.idea
+.vscode
