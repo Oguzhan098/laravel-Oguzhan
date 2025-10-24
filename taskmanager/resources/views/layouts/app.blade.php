@@ -4,19 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
-    <!-- Fonts -->
+
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Styles -->
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="bg-light">
@@ -28,9 +26,11 @@
             <a href="{{ route('users.index') }}" class="btn btn-outline-light btn-sm mr-2">Kullanıcılar</a>
             <a href="{{ route('categories.index') }}" class="btn btn-outline-light btn-sm mr-2">Kategoriler</a>
             <a href="{{ route('tasks.index') }}" class="btn btn-outline-light btn-sm mr-3">Görevler</a>
+            <a href="{{ route('activity.index') }}" class="btn btn-outline-light btn-sm mr-3">Activity Log</a>
+
         </div>
 
-        <!-- 🔹 Giriş yapma - çıkış yapma kısmı -->
+
         <ul class="navbar-nav ml-auto">
             @guest
                 <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Giriş</a></li>

@@ -14,31 +14,26 @@ class ValidEmailDomain implements Rule
         'gmail.com',
         'outlook.com',
         'hotmail.com',
-        'yahoo.com',
-        'icloud.com',
-        'proton.me',
-        'protonmail.com',
-        'edu.tr',      // üniversite e-postaları
-        'gov.tr',      // resmi kurumlar
-        'kendi-domainin.com', // örnek: kendi kurumsal domainin
+        'edu.tr',
+        'gov.tr',
+        'kendi-domainin.com',
     ];
 
     public function passes($attribute, $value)
     {
         $domain = strtolower(substr(strrchr($value, "@"), 1));
 
-        // 🔹 1. Format kontrolü
-        if (!preg_match('/^[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/', $domain)) {
+
+        if (!preg_match('/^[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/', $domain)) {  //format kontrolü
             return false;
         }
 
-        // 🔹 2. Doğrudan tam eşleşme kontrolü
-        if (in_array($domain, $this->allowedDomains)) {
+
+        if (in_array($domain, $this->allowedDomains)) {     // Doğrudan tam eşleşme kontrolü
             return true;
         }
 
-        // 🔹 3. “Alt domain” desteği (örnek: mail.uni.edu.tr)
-        foreach ($this->allowedDomains as $allowed) {
+        foreach ($this->allowedDomains as $allowed) {   //Alt domain” desteği (örnek: mail.uni.edu.tr)
             if (str_ends_with($domain, $allowed)) {
                 return true;
             }

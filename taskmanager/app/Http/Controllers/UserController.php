@@ -22,7 +22,7 @@ class UserController extends Controller
             $query->orderBy('updated_at', 'desc');
         }
 
-        $users = $query->get();
+        $users = $query->paginate(10)->withQueryString();
 
         return view('users.index', compact('users'));
     }
@@ -74,7 +74,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        if ($user->tasks()->exists()) {
+        if ($user->tasks()->exists() || $user->ActivityLogs()->exists()) {
             return redirect()->route('users.index')
                 ->with('error', 'Bu kullanıcıya ait görevler bulunduğu için silinemez. Önce görevleri silmelisiniz.');
         }

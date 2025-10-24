@@ -18,7 +18,6 @@ class Category extends Model
         'deleted_at',
     ];
 
-    // 🔹 Bir kategori birden fazla görev içerir
     public function tasks()
     {
         return $this->hasMany(Task::class);

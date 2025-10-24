@@ -6,31 +6,34 @@ use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Task extends Model
+class ActivityLog extends Model
 {
     use SoftDeletes, Filterable;
 
     protected $fillable = [
-        'title', 'description', 'user_id', 'category_id',
+        'user_id',
+        'task_id',
+        'action',
+        'description',
     ];
 
     protected $dates = [
         'deleted_at',
     ];
 
+    /**
+     * 🔹 Logu oluşturan kullanıcı
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function category()
+    /**
+     * 🔹 Logun ait olduğu görev
+     */
+    public function task()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Task::class);
     }
-    public function activityLogs()
-    {
-        return $this->hasMany(\App\ActivityLog::class);
-    }
-
-
 }

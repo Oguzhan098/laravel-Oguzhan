@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ActivityLogController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', 'UserController');
     Route::resource('categories', 'CategoryController');
     Route::resource('tasks', 'TaskController');
+    Route::resource('activity', 'ActivityLogController');
+    Route::get('activity-deleted', 'ActivityLogController@deleted')->name('activity.deleted');
+    Route::post('activity/{id}/restore', 'ActivityLogController@restore')->name('activity.restore');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');

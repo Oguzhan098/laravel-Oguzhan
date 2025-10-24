@@ -10,13 +10,17 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Category::query()->whereNull('deleted_at')->filter($request);
+        $query = Category::query()
+            ->whereNull('deleted_at')
+            ->filter($request); // kendi filter scope’un varsa burada çalışır
 
+        // 🔹 Varsayılan sıralama (sort parametresi yoksa)
         if (!$request->has('sort')) {
             $query->orderBy('updated_at', 'desc');
         }
 
-        $categories = $query->get();
+        // 🔹 Sayfalama: her sayfada 10 kayıt, mevcut query stringleri koru
+        $categories = $query->paginate(10)->withQueryString();
 
         return view('categories.index', compact('categories'));
     }

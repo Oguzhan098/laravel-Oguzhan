@@ -23,9 +23,13 @@ class User extends Authenticatable
         'deleted_at',
     ];
 
-    // 🔹 Bir kullanıcı birden fazla görev oluşturabilir
     public function tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    public function activityLogs()
+    {
+        return $this->hasMany(ActivityLog::class);
     }
 }

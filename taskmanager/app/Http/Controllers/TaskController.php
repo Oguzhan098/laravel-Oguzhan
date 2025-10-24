@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ActivityLog;
 use App\Task;
 use App\User;
 use App\Category;
@@ -20,7 +21,8 @@ class TaskController extends Controller
             $query->orderBy('updated_at', 'desc');
         }
 
-        $tasks = $query->get();
+        $tasks = $query->paginate(10)->withQueryString();
+
 
         return view('tasks.index', compact('tasks'));
     }
@@ -49,6 +51,17 @@ class TaskController extends Controller
             'title.required' => 'Görev başlığı zorunludur.',
             'title.unique' => 'Bu görev zaten mevcut.',
         ]);
+
+        // 🟢 Görevi oluştur
+        $task = Task::create($request->all());
+
+        // 🟢 İşlem logunu ekle (sisteme etki etmeden sadece kayıt tutar)
+        ActivityLog::create([
+            'user_id'     => auth()->id(), // Giriş yapan kullanıcı kimse
+            'action'      => 'task_created',
+            'description' => 'Yeni görev oluşturuldu: ' . $task->title,
+        ]);
+
         Task::create($request->all());
         return redirect()->route('tasks.index')->with('success', 'Görev oluşturuldu.');
     }

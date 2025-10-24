@@ -30,7 +30,7 @@ class LoginController extends Controller
     protected $redirectTo = RouteServiceProvider::HOME;
     protected function loggedOut(Request $request)
     {
-        return redirect()->route('login'); // ✅ route ismiyle yönlendirme
+        return redirect()->route('login');
     }
     /**
      * Create a new controller instance.

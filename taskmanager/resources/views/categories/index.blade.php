@@ -7,6 +7,7 @@
         <a href="{{ route('categories.create') }}" class="btn btn-primary">Yeni Kategori</a>
     </div>
 
+
     <!-- 🔹 Arama formu -->
     <form method="GET" action="{{ route('categories.index') }}" class="mb-3 d-flex">
         <input type="text" name="search" value="{{ request('search') }}" class="form-control mr-2" placeholder="Kategori ara...">
@@ -21,7 +22,7 @@
         <tr>
             <th>#</th>
             <th>
-                {{-- 🔹 Kategori Adı sütunu sıralanabilir --}}
+
                 <a href="{{ route('categories.index', array_merge(request()->all(), [
                     'sort' => 'name',
                     'direction' => (request('sort') === 'name' && request('direction') === 'asc') ? 'desc' : 'asc'
@@ -33,7 +34,7 @@
                 </a>
             </th>
             <th>
-                {{-- 🔹 Güncellenme Tarihi sütunu sıralanabilir --}}
+
                 <a href="{{ route('categories.index', array_merge(request()->all(), [
                     'sort' => 'updated_at',
                     'direction' => (request('sort') === 'updated_at' && request('direction') === 'asc') ? 'desc' : 'asc'
@@ -48,7 +49,7 @@
         </tr>
         </thead>
         <tbody>
-        @forelse($categories as $index => $category)
+        @forelse($categories as $category)
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $category->name }}</td>
@@ -58,9 +59,7 @@
                     <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
-                        <button onclick="return confirm('Bu kategoriyi silmek istiyor musun?')" class="btn btn-sm btn-danger">
-                            Sil
-                        </button>
+                        <button onclick="return confirm('Bu kategoriyi silmek istiyor musun?')" class="btn btn-sm btn-danger">Sil</button>
                     </form>
                 </td>
             </tr>
@@ -69,4 +68,10 @@
         @endforelse
         </tbody>
     </table>
+
+    <!-- 🔹 Sayfalama kısmı -->
+    <div class="d-flex justify-content-center mt-3">
+        {{ $categories->links('pagination::bootstrap-4') }}
+    </div>
+
 @endsection
